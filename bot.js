@@ -93,12 +93,16 @@ export default class Bot extends BaseBot {
         if(!lang) {
             lang = "en"
         }
+
+        // this search wikipedia by title
         const pages = await this.baseWiki.searchTitle(lang, content, 3)
         for(const page of pages) {
             const titlePage = page.title
             const urlPage = this.baseWiki.linkPage(lang, page.key)
             const descPage = page.description ? page.description : ""
 
+
+            // and return result 
             await this.makeRequest("sendMessage", {
                 chat_id: chatId,
                 text: `[${titlePage}](${urlPage})\n${descPage}`,
